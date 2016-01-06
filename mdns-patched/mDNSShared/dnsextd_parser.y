@@ -23,7 +23,7 @@
 #include "DebugServices.h"
 #include "dnsextd.h"
 
-void yyerror( const char* error );
+void yyerror( void *context, const char* error );
 int  yylex(void);
 
 
@@ -92,6 +92,8 @@ SetupOptions
 	);
 
 %}
+
+%parse-param { void *context }
 
 %union
 {
@@ -379,7 +381,7 @@ int yywrap(void);
 
 extern int yylineno;
 
-void yyerror( const char *str )
+void yyerror( void *context, const char *str )
 {
         fprintf( stderr,"%s:%d: error: %s\n", g_filename, yylineno, str );
 }
